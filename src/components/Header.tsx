@@ -48,9 +48,9 @@ const Header = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
-            <h1 className="text-xl font-bold text-white">
+            <div className="text-xl font-bold text-white">
               Joedy Felts
-            </h1>
+            </div>
           </div>
           
           <nav className="hidden md:flex space-x-8">
@@ -101,7 +101,13 @@ const Header = () => {
           </div>
 
           <div className="md:hidden">
-            <Button variant="ghost" size="sm" onClick={toggleMenu} className="text-white">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={toggleMenu} 
+              className="text-white"
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>

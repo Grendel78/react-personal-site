@@ -92,6 +92,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--energetic-primary))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                        aria-label={`View ${project.title} live site (opens in new tab)`}
                       >
                         <Button 
                           className="btn-energetic-coral w-full text-white font-semibold" 
@@ -109,6 +110,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--energetic-primary))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                        aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
                       >
                         <Button 
                           variant="blue" 

@@ -166,13 +166,15 @@ const Experience = () => {
           <p className="text-gray-300 mb-4 leading-relaxed">
             {highlightTechTerms(experience.description)}
           </p>
-          <ul className="space-y-2 list-disc pl-6 energetic-bullet">
-            {experience.achievements.map((achievement, achievementIndex) => (
-              <li key={achievementIndex} className="text-gray-300">
-                {highlightTechTerms(achievement)}
-              </li>
-            ))}
-          </ul>
+          {experience.achievements.length > 0 && (
+            <ul className="space-y-2 list-disc pl-6 energetic-bullet" role="list">
+              {experience.achievements.map((achievement, achievementIndex) => (
+                <li key={achievementIndex} className="text-gray-300">
+                  {highlightTechTerms(achievement)}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     );

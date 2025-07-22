@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-rea
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/useToast';
 
 const Contact = () => {
@@ -225,6 +226,7 @@ const Contact = () => {
               target="_blank" 
               rel="noopener noreferrer"
               className="block btn-professional p-6 rounded-xl transition-all duration-300"
+              aria-label="Connect with Joedy on LinkedIn (opens in new tab)"
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-[hsl(198_93%_60%_/_0.2)] rounded-lg flex items-center justify-center border border-[hsl(198_93%_60%_/_0.3)]">
@@ -242,12 +244,14 @@ const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  <div>
+                   <Label htmlFor="firstName" className="text-white mb-2 block">First Name *</Label>
                    <Input 
+                     id="firstName"
                      name="firstName"
                      value={formData.firstName}
                      onChange={handleInputChange}
                      onBlur={handleBlur}
-                     placeholder="First Name" 
+                     placeholder="Enter your first name" 
                      required
                      className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-400 focus:border-orange-500/50 ${
                        fieldErrors.firstName ? 'border-red-500/70' : 'border-[hsl(273,41%,18%)]'
@@ -255,24 +259,28 @@ const Contact = () => {
                    />
                  </div>
                  <div>
+                   <Label htmlFor="lastName" className="text-white mb-2 block">Last Name</Label>
                    <Input 
+                     id="lastName"
                      name="lastName"
                      value={formData.lastName}
                      onChange={handleInputChange}
-                     placeholder="Last Name" 
+                     placeholder="Enter your last name" 
                      className="bg-[hsl(245,35%,5%)] border-[hsl(273,41%,18%)] text-white placeholder:text-gray-400 focus:border-orange-500/50"
                    />
                  </div>
                </div>
                
                <div>
+                 <Label htmlFor="email" className="text-white mb-2 block">Email Address *</Label>
                  <Input 
+                   id="email"
                    name="email"
                    type="email" 
                    value={formData.email}
                    onChange={handleInputChange}
                    onBlur={handleBlur}
-                   placeholder="Email Address" 
+                   placeholder="Enter your email address" 
                    required
                    className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-400 focus:border-orange-500/50 ${
                      fieldErrors.email ? 'border-red-500/70' : 'border-[hsl(273,41%,18%)]'
@@ -281,22 +289,26 @@ const Contact = () => {
                </div>
                
                <div>
+                 <Label htmlFor="subject" className="text-white mb-2 block">Subject</Label>
                  <Input 
+                   id="subject"
                    name="subject"
                    value={formData.subject}
                    onChange={handleInputChange}
-                   placeholder="Subject" 
+                   placeholder="What's this about?" 
                    className="bg-[hsl(245,35%,5%)] border-[hsl(273,41%,18%)] text-white placeholder:text-gray-400 focus:border-orange-500/50"
                  />
                </div>
                
                <div>
+                 <Label htmlFor="message" className="text-white mb-2 block">Message *</Label>
                  <Textarea 
+                   id="message"
                    name="message"
                    value={formData.message}
                    onChange={handleInputChange}
                    onBlur={handleBlur}
-                   placeholder="Your Message" 
+                   placeholder="Tell me about your project or just say hello!" 
                    rows={5}
                    required
                    className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-400 focus:border-orange-500/50 resize-none ${

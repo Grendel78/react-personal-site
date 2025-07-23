@@ -1,11 +1,13 @@
 import { ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import onDemandWeb from '@/assets/images/onDemandWeb.png';
 import urImage from '@/assets/images/ur.png';
 import urnowImage from '@/assets/images/urnow.png';
 import joedyfeltsImage from '@/assets/images/joedyfeltscom.png';
 
 const Projects = () => {
+  const { trackProjectInteraction } = useAnalytics();
   const projects = [
     {
       title: "OnDemand Web",
@@ -93,6 +95,7 @@ const Projects = () => {
                         rel="noopener noreferrer"
                         className="flex-1 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--energetic-primary))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                         aria-label={`View ${project.title} live site (opens in new tab)`}
+                        onClick={() => trackProjectInteraction(project.title, 'live_site')}
                       >
                         <Button 
                           className="btn-energetic-coral w-full text-white font-semibold" 
@@ -111,6 +114,7 @@ const Projects = () => {
                         rel="noopener noreferrer"
                         className="flex-1 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--energetic-primary))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                         aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
+                        onClick={() => trackProjectInteraction(project.title, 'view_code')}
                       >
                         <Button 
                           variant="blue" 

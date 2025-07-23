@@ -1,15 +1,18 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const { trackNavigation, trackButtonClick } = useAnalytics();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleGetInTouch = () => {
+    trackButtonClick('Get In Touch', 'header');
+    
     // Scroll to contact section
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -17,7 +20,7 @@ const Header = () => {
       
       // Focus the first input field after a brief delay to ensure scroll completes
       setTimeout(() => {
-        const firstInput = contactSection.querySelector('input[placeholder="First Name"]') as HTMLInputElement;
+        const firstInput = contactSection.querySelector('input[name="firstName"]') as HTMLInputElement;
         if (firstInput) {
           firstInput.focus();
         }
@@ -58,35 +61,40 @@ const Header = () => {
               activeSection === 'home' 
                 ? 'text-[hsl(14_95%_58%)] font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[hsl(14_95%_58%)] after:rounded-full' 
                 : 'text-gray-300 hover:text-[hsl(14_95%_58%)]'
-            }`}>
+            }`}
+            onClick={() => trackNavigation('home')}>
               Home
             </a>
             <a href="#about" className={`relative transition-all text-sm font-medium pb-2 ${
               activeSection === 'about' 
                 ? 'text-[hsl(14_95%_58%)] font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[hsl(14_95%_58%)] after:rounded-full' 
                 : 'text-gray-300 hover:text-[hsl(14_95%_58%)]'
-            }`}>
+            }`}
+            onClick={() => trackNavigation('about')}>
               About
             </a>
             <a href="#experience" className={`relative transition-all text-sm font-medium pb-2 ${
               activeSection === 'experience' 
                 ? 'text-[hsl(14_95%_58%)] font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[hsl(14_95%_58%)] after:rounded-full' 
                 : 'text-gray-300 hover:text-[hsl(14_95%_58%)]'
-            }`}>
+            }`}
+            onClick={() => trackNavigation('experience')}>
               Experience
             </a>
             <a href="#projects" className={`relative transition-all text-sm font-medium pb-2 ${
               activeSection === 'projects' 
                 ? 'text-[hsl(14_95%_58%)] font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[hsl(14_95%_58%)] after:rounded-full' 
                 : 'text-gray-300 hover:text-[hsl(14_95%_58%)]'
-            }`}>
+            }`}
+            onClick={() => trackNavigation('projects')}>
               Projects
             </a>
             <a href="#contact" className={`relative transition-all text-sm font-medium pb-2 ${
               activeSection === 'contact' 
                 ? 'text-[hsl(14_95%_58%)] font-semibold after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-[hsl(14_95%_58%)] after:rounded-full' 
                 : 'text-gray-300 hover:text-[hsl(14_95%_58%)]'
-            }`}>
+            }`}
+            onClick={() => trackNavigation('contact')}>
               Contact
             </a>
           </nav>
@@ -117,19 +125,24 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden nav-blur border-t border-white/10">
           <div className="px-4 pt-2 pb-3 space-y-1">
-            <a href="#home" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium">
+            <a href="#home" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium"
+               onClick={() => trackNavigation('home')}>
               Home
             </a>
-            <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium">
+            <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium"
+               onClick={() => trackNavigation('about')}>
               About
             </a>
-            <a href="#experience" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium">
+            <a href="#experience" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium"
+               onClick={() => trackNavigation('experience')}>
               Experience
             </a>
-            <a href="#projects" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium">
+            <a href="#projects" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium"
+               onClick={() => trackNavigation('projects')}>
               Projects
             </a>
-            <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium">
+            <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-orange-400 text-sm font-medium"
+               onClick={() => trackNavigation('contact')}>
               Contact
             </a>
           </div>

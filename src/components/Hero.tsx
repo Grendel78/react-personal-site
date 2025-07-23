@@ -2,6 +2,7 @@ import { ArrowRight, Download, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState, useRef } from 'react';
 import { useIsMobile } from '@/hooks/useMobile';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import joedyImage from '@/assets/images/joedy.jpg';
 import joedyResume from '@/assets/documents/joedy_felts_resume.pdf';
 
@@ -9,8 +10,11 @@ const Hero = () => {
   const [showSpeechBubble, setShowSpeechBubble] = useState(false);
   const isMobile = useIsMobile();
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { trackButtonClick, trackEasterEgg } = useAnalytics();
 
   const handleViewMyWork = () => {
+    trackButtonClick('View My Work', 'hero_section');
+    
     // Scroll to projects section
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
@@ -29,6 +33,7 @@ const Hero = () => {
     // Set timeout to show speech bubble after 2.5 seconds
     hoverTimeoutRef.current = setTimeout(() => {
       setShowSpeechBubble(true);
+      trackEasterEgg('hint_revealed');
     }, 2500);
   };
 
@@ -115,6 +120,7 @@ const Hero = () => {
               href={joedyResume}
               download="Joedy_Felts_Resume.pdf"
               className="flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--energetic-primary))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              onClick={() => trackButtonClick('Download Resume', 'hero_section')}
             >
               <Button 
                 variant="blue"

@@ -6,10 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/useToast';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { trackFormSubmission, trackSocialLink } = useAnalytics();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -117,6 +119,9 @@ const Contact = () => {
     
     if (!validateForm()) return;
     
+    // Track form submission attempt
+    trackFormSubmission('contact_form', true);
+    
     setIsSubmitting(true);
     
     try {    
@@ -135,6 +140,9 @@ const Contact = () => {
       const result = await response.json();
 
       if (response.ok) {
+        // Track successful form submission
+        trackFormSubmission('contact_form', true);
+        
         toast({
           title: "Message Sent!",
           description: "Thank you for reaching out. I'll get back to you soon!",
@@ -158,6 +166,9 @@ const Contact = () => {
         throw new Error(result.error || 'Failed to send message');
       }
     } catch (error) {
+      // Track form submission error
+      trackFormSubmission('contact_form', false, error instanceof Error ? error.message : 'Unknown error');
+      
       console.error('Contact form error:', error);
       toast({
         title: "Error",
@@ -227,6 +238,7 @@ const Contact = () => {
               rel="noopener noreferrer"
               className="block btn-professional p-6 rounded-xl transition-all duration-300"
               aria-label="Connect with Joedy on LinkedIn (opens in new tab)"
+              onClick={() => trackSocialLink('linkedin')}
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-[hsl(198_93%_60%_/_0.2)] rounded-lg flex items-center justify-center border border-[hsl(198_93%_60%_/_0.3)]">
@@ -244,16 +256,16 @@ const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  <div>
-                   <Label htmlFor="firstName" className="text-white mb-2 block">First Name *</Label>
+                   <Label htmlFor="firstName" className="text-white mb-2 block">First Name <span className="gradient-text-coral">*</span></Label>
                    <Input 
                      id="firstName"
                      name="firstName"
                      value={formData.firstName}
                      onChange={handleInputChange}
                      onBlur={handleBlur}
-                     placeholder="Enter your first name" 
-                     required
-                     className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-400 focus:border-orange-500/50 ${
+                      placeholder="Anakin" 
+                      required
+                      className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-500 focus:border-orange-500/50 ${
                        fieldErrors.firstName ? 'border-red-500/70' : 'border-[hsl(273,41%,18%)]'
                      }`}
                    />
@@ -265,14 +277,14 @@ const Contact = () => {
                      name="lastName"
                      value={formData.lastName}
                      onChange={handleInputChange}
-                     placeholder="Enter your last name" 
-                     className="bg-[hsl(245,35%,5%)] border-[hsl(273,41%,18%)] text-white placeholder:text-gray-400 focus:border-orange-500/50"
+                      placeholder="Skywalker" 
+                      className="bg-[hsl(245,35%,5%)] border-[hsl(273,41%,18%)] text-white placeholder:text-gray-500 focus:border-orange-500/50"
                    />
                  </div>
                </div>
                
                <div>
-                 <Label htmlFor="email" className="text-white mb-2 block">Email Address *</Label>
+                 <Label htmlFor="email" className="text-white mb-2 block">Email Address <span className="gradient-text-coral">*</span></Label>
                  <Input 
                    id="email"
                    name="email"
@@ -280,9 +292,9 @@ const Contact = () => {
                    value={formData.email}
                    onChange={handleInputChange}
                    onBlur={handleBlur}
-                   placeholder="Enter your email address" 
-                   required
-                   className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-400 focus:border-orange-500/50 ${
+                    placeholder="darth.vader@galactic-empire.com" 
+                    required
+                    className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-500 focus:border-orange-500/50 ${
                      fieldErrors.email ? 'border-red-500/70' : 'border-[hsl(273,41%,18%)]'
                    }`}
                  />
@@ -295,23 +307,23 @@ const Contact = () => {
                    name="subject"
                    value={formData.subject}
                    onChange={handleInputChange}
-                   placeholder="What's this about?" 
-                   className="bg-[hsl(245,35%,5%)] border-[hsl(273,41%,18%)] text-white placeholder:text-gray-400 focus:border-orange-500/50"
+                    placeholder="What's this about?" 
+                    className="bg-[hsl(245,35%,5%)] border-[hsl(273,41%,18%)] text-white placeholder:text-gray-500 focus:border-orange-500/50"
                  />
                </div>
                
                <div>
-                 <Label htmlFor="message" className="text-white mb-2 block">Message *</Label>
+                 <Label htmlFor="message" className="text-white mb-2 block">Message <span className="gradient-text-coral">*</span></Label>
                  <Textarea 
                    id="message"
                    name="message"
                    value={formData.message}
                    onChange={handleInputChange}
                    onBlur={handleBlur}
-                   placeholder="Tell me about your project or just say hello!" 
-                   rows={5}
-                   required
-                   className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-400 focus:border-orange-500/50 resize-none ${
+                    placeholder="Tell me about your project or just say hello!" 
+                    rows={5}
+                    required
+                    className={`bg-[hsl(245,35%,5%)] text-white placeholder:text-gray-500 focus:border-orange-500/50 resize-none ${
                      fieldErrors.message ? 'border-red-500/70' : 'border-[hsl(273,41%,18%)]'
                    }`}
                  />

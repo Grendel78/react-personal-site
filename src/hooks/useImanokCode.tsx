@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { useIsMobile } from './useMobile';
+import { useAnalytics } from './useAnalytics';
 
 const IMANOK_CODE = [
   'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
@@ -13,9 +14,13 @@ export const useImanokCode = () => {
   const [progress, setProgress] = useState<number>(0);
   const [showSuccess, setShowSuccess] = useState(false);
   const isMobile = useIsMobile();
+  const { trackEasterEgg } = useAnalytics();
 
   const triggerEasterEgg = () => {
     setShowSuccess(true);
+    
+    // Track easter egg activation
+    trackEasterEgg('activated');
     
     const audio = new Audio('/artnoc.mp3');
     audio.volume = 0.3;
@@ -27,7 +32,7 @@ export const useImanokCode = () => {
     // Fireworks function
     const firework = () => {
       confetti({
-        particleCount: 120,
+        particleCount: 150,
         startVelocity: 30,
         spread: 360,
         origin: {

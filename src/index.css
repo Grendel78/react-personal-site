@@ -316,11 +316,88 @@
     transform: translateY(-10px);
   }
 }
+
+@keyframes portraitVibrate {
+  /* No movement for first 0.5s (0-19%) */
+  0%, 19% {
+    transform: translateX(0px) scale(1);
+  }
+  
+  /* Light vibration 0.5s - 1s (19-38%) */
+  19.1% { transform: translateX(-0.35px) scale(1); }
+  21% { transform: translateX(0.35px) scale(1); }
+  23% { transform: translateX(-0.35px) scale(1); }
+  25% { transform: translateX(0.35px) scale(1); }
+  27% { transform: translateX(-0.35px) scale(1); }
+  29% { transform: translateX(0.35px) scale(1); }
+  31% { transform: translateX(-0.35px) scale(1); }
+  33% { transform: translateX(0.35px) scale(1); }
+  35% { transform: translateX(-0.35px) scale(1); }
+  37% { transform: translateX(0.35px) scale(1); }
+  38% { transform: translateX(-0.35px) scale(1); }
+  
+  /* Medium vibration 1s - 1.5s (38-57%) */
+  38.1% { transform: translateX(-0.7px) scale(1); }
+  40% { transform: translateX(0.7px) scale(1); }
+  42% { transform: translateX(-0.7px) scale(1); }
+  44% { transform: translateX(0.7px) scale(1); }
+  46% { transform: translateX(-0.7px) scale(1); }
+  48% { transform: translateX(0.7px) scale(1); }
+  50% { transform: translateX(-0.7px) scale(1); }
+  52% { transform: translateX(0.7px) scale(1); }
+  54% { transform: translateX(-0.7px) scale(1); }
+  56% { transform: translateX(0.7px) scale(1); }
+  57% { transform: translateX(-0.7px) scale(1); }
+  
+  /* Strong vibration 1.5s - 2s (57-75%) */
+  57.1% { transform: translateX(-1px) scale(1); }
+  59% { transform: translateX(1px) scale(1); }
+  61% { transform: translateX(-1px) scale(1); }
+  63% { transform: translateX(1px) scale(1); }
+  65% { transform: translateX(-1px) scale(1); }
+  67% { transform: translateX(1px) scale(1); }
+  69% { transform: translateX(-1px) scale(1); }
+  71% { transform: translateX(1px) scale(1); }
+  73% { transform: translateX(-1px) scale(1); }
+  75% { transform: translateX(1px) scale(1); }
+  75.1% { transform: translateX(-1px) scale(1); }
+  
+  /* Very strong vibration 2s - 2.25s (75-85%) */
+  75.1% { transform: translateX(-1.4px) scale(1); }
+  77% { transform: translateX(1.4px) scale(1); }
+  79% { transform: translateX(-1.4px) scale(1); }
+  81% { transform: translateX(1.4px) scale(1); }
+  83% { transform: translateX(-1.4px) scale(1); }
+  85% { transform: translateX(1.4px) scale(1); }
+  
+  /* Pop animation 2.25s - 2.5s (85-94%) */
+  85.1% { transform: translateX(0px) scale(1); }
+  87% { transform: translateX(0px) scale(1.03); }
+  89% { transform: translateX(0px) scale(1.07); }
+  91% { transform: translateX(0px) scale(1.1); }
+  92% { transform: translateX(0px) scale(1.07); }
+  93% { transform: translateX(0px) scale(1.03); }
+  94% { transform: translateX(0px) scale(1); }
+
+   /* Hold the final state 2.5s - 2.65s (94-100%) */
+   94.1%, 100% { transform: translateX(0px) scale(1); }
+}
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
 }
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+.animate-portrait-vibrate {
+  animation: portraitVibrate 2.75s ease-out forwards;
+}
+
+/* Chrome and Edge specific adjustments */
+@supports (-webkit-appearance:none) and (not (-moz-appearance:none)) and (not (font: -apple-system-body)) {
+  .animate-portrait-vibrate img {
+    /* Fix for Chrome and Edge translation bug */
+    transform: translateY(-1px);
+  }
 }
 
 /* Professional Network Button */

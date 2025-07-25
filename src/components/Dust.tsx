@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useGlobalMousePosition } from '@/hooks/useGlobalMousePosition';
+import { animated } from '@react-spring/web';
 
 interface DustParticle {
   id: string;
@@ -202,19 +203,23 @@ const Dust = () => {
   return (
     <div ref={dustRef} className="fixed inset-0 pointer-events-none z-0">
       {particles.map((particle) => (
-        <div
-          key={particle.id}
-          className={`absolute bg-gradient-to-br ${particle.gradient} rounded-full transition-none`}
-          style={{
-            left: `${particle.x}px`,
-            top: `${particle.y}px`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            filter: `blur(${particle.blur === 'blur-xl' ? '20px' : particle.blur === 'blur-2xl' ? '32px' : particle.blur === 'blur-lg' ? '16px' : '12px'}) brightness(${particle.brightness})`,
-          }}
-        />
+        <OptimizedParticle key={particle.id} particle={particle} />
       ))}
     </div>
+  );
+};
+
+const OptimizedParticle = ({ particle }: { particle: DustParticle }) => {
+  return (
+    <animated.div
+      className={`absolute bg-gradient-to-br ${particle.gradient} rounded-full will-change-transform`}
+      style={{
+        transform: `translate3d(${particle.x}px, ${particle.y}px, 0px)`,
+        width: `${particle.size}px`,
+        height: `${particle.size}px`,
+        filter: `blur(${particle.blur === 'blur-xl' ? '20px' : particle.blur === 'blur-2xl' ? '32px' : particle.blur === 'blur-lg' ? '16px' : '12px'}) brightness(${particle.brightness})`,
+      }}
+    />
   );
 };
 

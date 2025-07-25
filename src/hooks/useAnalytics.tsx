@@ -4,6 +4,8 @@ export const useAnalytics = () => {
   const trackEvent = useCallback((eventName: string, parameters?: Record<string, any>) => {
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', eventName, parameters);
+    } else {
+      console.warn('GA4 not initialized');
     }
   }, []);
 

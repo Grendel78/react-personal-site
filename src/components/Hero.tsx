@@ -8,6 +8,7 @@ import joedyResume from '@/assets/documents/joedy_felts_resume.pdf';
 
 const Hero = () => {
   const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const isMobile = useIsMobile();
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { trackButtonClick, trackEasterEgg } = useAnalytics();
@@ -25,6 +26,8 @@ const Hero = () => {
   const handleMouseEnter = () => {
     if (isMobile) return;
     
+    setIsHovering(true);
+    
     // Clear any existing timeout
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -40,6 +43,8 @@ const Hero = () => {
   const handleMouseLeave = () => {
     if (isMobile) return;
     
+    setIsHovering(false);
+    
     // Clear timeout and hide speech bubble immediately
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -54,7 +59,9 @@ const Hero = () => {
         <div className="text-center">
           <div className="mb-8 relative">
             <div 
-              className="w-48 h-48 rounded-full bg-gradient-to-br from-orange-500/20 to-purple-500/20 mx-auto mb-8 flex items-center justify-center backdrop-blur-sm border border-white/10 spotlight-hover"
+              className={`w-48 h-48 rounded-full bg-gradient-to-br from-orange-500/20 to-purple-500/20 mx-auto mb-8 flex items-center justify-center backdrop-blur-sm border border-white/10 spotlight-hover ${
+                isHovering && !isMobile ? 'animate-portrait-vibrate' : ''
+              }`}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
